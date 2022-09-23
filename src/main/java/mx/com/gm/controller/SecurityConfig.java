@@ -39,7 +39,10 @@ public class SecurityConfig  {
                 .antMatchers("/editar/**", "/agregar/**", "/eliminar")
                 .hasRole("ADMIN")
                 .antMatchers("/")
-                .hasAnyRole("USER","ADMIN");
+                .hasAnyRole("USER","ADMIN")
+                .and()
+                .formLogin()
+                .loginPage("/login");
         return http.build();
     }
 
