@@ -18,7 +18,7 @@ Curso universidad Spring Udemy -> Spring boot y Thymeleaf
 username: user
 <br/>
 password: 12345
-<h3>Admin</h3>
+<h3>Admin:</h3>
 <br/>
 username: admin
 <br/>
