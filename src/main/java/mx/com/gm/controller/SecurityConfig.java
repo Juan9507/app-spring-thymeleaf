@@ -42,7 +42,9 @@ public class SecurityConfig  {
                 .hasAnyRole("USER","ADMIN")
                 .and()
                 .formLogin()
-                .loginPage("/login");
+                .loginPage("/login")
+                .and()
+                .exceptionHandling().accessDeniedPage("/errores/403");
         return http.build();
     }
 
