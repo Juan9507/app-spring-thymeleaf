@@ -1,7 +1,10 @@
 package mx.com.gm.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
@@ -19,7 +22,7 @@ public class SecurityConfig  {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
+    /*@Bean
     public UserDetailsService userDetailsService(BCryptPasswordEncoder bCryptPasswordEncoder){
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
         manager.createUser(User.withUsername("user")
@@ -31,6 +34,19 @@ public class SecurityConfig  {
                 .roles("ADMIN","USER")
                 .build());
         return manager;
+    }*/
+
+    @Bean
+    public AuthenticationManager authManager(
+            HttpSecurity http,
+            BCryptPasswordEncoder bCryptPasswordEncoder,
+            UserDetailsService userDetailsService)
+        throws Exception {
+            return http.getSharedObject(AuthenticationManagerBuilder.class)
+                    .userDetailsService(userDetailsService)
+                    .passwordEncoder(bCryptPasswordEncoder)
+                    .and()
+                    .build();
     }
 
     @Bean
