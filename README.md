@@ -1,2 +1,2 @@
 # app-spring-thymeleaf
-Página web creada con Spring boot y Thymeleaf
+Curso universidad Spring Udemy -> Spring boot y Thymeleaf
