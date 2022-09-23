@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns="http://www.w3.org/1999/xhtml">
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8"/>
     <title>Inicio</title>
 </head>
 <body>
     <header th:replace="layout/plantilla :: header"></header>
-    <a th:href="@{/agregar}">[[#{persona.crear}]]</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/agregar}">[[#{persona.crear}]]</a>
     <br/>
     <div th:if="${personas != null and !personas.isEmpty()}">
         <table th:border="1">
@@ -16,16 +17,16 @@
                 <th>[[#{persona.apellido}]]</th>
                 <th>[[#{persona.email}]]</th>
                 <th>[[#{persona.telefono}]]</th>
-                <th>[[#{persona.accion.editar}]]</th>
-                <th>[[#{persona.accion.eliminar}]]</th>
+                <th sec:authorize="hasRole('ROLE_ADMIN')">[[#{persona.accion.editar}]]</th>
+                <th sec:authorize="hasRole('ROLE_ADMIN')">[[#{persona.accion.eliminar}]]</th>
             </tr>
             <tr th:each="persona : ${personas}">
                 <td th:text="${persona.nombre}">Mostrar nombre</td>
                 <td th:text="${persona.apellido}">Mostrar apellido</td>
                 <td th:text="${persona.email}">Mostrar email</td>
                 <td th:text="${persona.telefono}">Mostrar teléfono</td>
-                <td><a th:href="@{/editar/} + ${persona.id_persona}" th:text="#{persona.accion.editar}"/></td>
-                <td><a th:href="@{/eliminar(id_persona=${persona.id_persona})}" th:text="#{persona.accion.eliminar}"/></td>
+                <td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/editar/} + ${persona.id_persona}" th:text="#{persona.accion.editar}"/></td>
+                <td sec:authorize="hasRole('ROLE_ADMIN')"><a th:href="@{/eliminar(id_persona=${persona.id_persona})}" th:text="#{persona.accion.eliminar}"/></td>
             </tr>
         </table>
     </div>
